@@ -5,21 +5,20 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    float speed;
-    float xRange = .0f;
-    float yRange = 60.0f;
-    [SerializeField]
-    float positionrotationFactor = 5.0f;
-    [SerializeField]
-    float controlRotationFactor=1.0f;
-    [SerializeField]
-    float positionyawFactor=5.0f;
-    [SerializeField]
-    float controlRollFactor=5.0f;
+    [Header("General")]
+    [SerializeField] float speed;
+    [SerializeField] float xRange = 20.0f;
+    [SerializeField] float yRange = 20.0f;
+
+    [Header ("Position-Control")]
+    [SerializeField] float positionrotationFactor = 5.0f;
+    [SerializeField] float controlRotationFactor=1.0f;
+    [SerializeField] float positionyawFactor=5.0f;
+    [SerializeField] float controlRollFactor=5.0f;
 
     float xOffset, yOffset;
 
+    bool isPlayerAlive = true;
 
     void Start()
     {
@@ -29,10 +28,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerPosition();
-        PlayerRotation();
+        if (isPlayerAlive)
+        {
+            PlayerPosition();
+            PlayerRotation();
+        }
     }
 
+    void OnPlayerDeath()
+    {
+        isPlayerAlive = false;
+        print("Msg Received");
+    }
     private void PlayerRotation()
     {
         // 
